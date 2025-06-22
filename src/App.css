@@ -1,10 +1,14 @@
+:root{
+  background-color: #464646;
+}
+
 @import "tailwindcss";
 
 @theme {
-    --font-sans: "Work Sans", sans-serif;
-    --color-darkgrey: #464646;
-    --color-pink: #DF59C2;
-    --color-green: #69DF59;
-    --color-lightblue: #59D2DF;
-    --color-yellow: #DFDF59;
+  --font-sans: "Work Sans", sans-serif;
+  --color-darkgrey: #464646;
+  --color-pink: #DF59C2;
+  --color-green: #69DF59;
+  --color-lightblue: #59D2DF;
+  --color-yellow: #DFDF59;
 }
