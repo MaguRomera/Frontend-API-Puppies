@@ -16,7 +16,7 @@ export default function Home(){
         <div className="cnt-main-home">
             <EstadoComida gramos={plato}/>
             <span className="info-tanque">
-                <EstadoComedero value={Math.round((30 - tanque) / 30 * 100)}/>
+                <EstadoComedero value={Math.round((30 - tanque) / 30 * 100 + 5)}/>
             </span>
         </div>
     )
