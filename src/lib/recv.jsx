@@ -6,6 +6,17 @@ import { createContext } from "react";
 
 const MQTT = createContext(/** @type {mqtt.MqttClient | null} */ (null));
 
+/**
+ * @typedef {object} ComederoData 
+ * @prop {number} plato del 0 al 100 gramos
+ * @prop {number} tanque distancia en cm
+ */
+
+/**
+ * Ejecuta el callback cuando recibe un mensaje
+ * @param {(data: ComederoData) => void} callback
+ * @returns el cliente mqtt
+ */
 export function useRecv(callback) {
     const client = useContext(MQTT)
 
@@ -30,6 +41,9 @@ export function useRecv(callback) {
     return client
 }
 
+/**
+ * Provee la conexión a la placa
+ */
 export function RecvProvider({ children }) {
     const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt", {})
     client.subscribe("utn-frsfco/comedero")
