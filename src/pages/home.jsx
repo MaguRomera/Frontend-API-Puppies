@@ -3,8 +3,10 @@ import { EstadoComida } from "../componentes/EstadoComida";
 export default function Home(){
     return(
         <div className="cnt-main-home">
-            <EstadoComedero/>
             <EstadoComida/>
+            <span className="info-tanque">
+                <EstadoComedero/>
+            </span>
         </div>
     )
 }
