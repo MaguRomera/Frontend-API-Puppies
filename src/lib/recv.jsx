@@ -26,10 +26,13 @@ export function useRecv(callback) {
             client.off("message", parseMessage)
         }
     }, [])
+
+    return client
 }
 
 export function RecvProvider({ children }) {
     const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt", {})
+    client.subscribe("utn-frsfco/comedero")
 
     return (
         <MQTT.Provider value={client}>
