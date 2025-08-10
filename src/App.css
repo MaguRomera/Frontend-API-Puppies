@@ -2,14 +2,6 @@
   background-color: #464646;
   display: flex;
   flex-direction: column;
-  --font-sans: "Work Sans", sans-serif;
-  --color-darkgrey: #464646;
-  --color-pink: #DF59C2;
-  --color-green: #69DF59;
-  --color-lightblue: #59D2DF;
-  --color-yellow: #DFDF59;
-  --color-lightgrey: #C8C8C8;
-  --color-verydarkgrey: #222222;
 }
 
 @import "tailwindcss";
@@ -22,6 +14,7 @@
   --color-lightblue: #59D2DF;
   --color-yellow: #DFDF59;
   --color-lightgrey: #C8C8C8;
+  --color-verydarkgrey: #222222;
 }
 
 /*---------------HOME------------------*/
@@ -33,13 +26,6 @@
   align-items: center;
 }
 /*---------------MENU-------------------*/
-.header-cnt{
-  display: flex;
-  flex-direction: row;
-  background-color: var(--color-verydarkgrey);
-  height: 3rem;
-  padding: 1rem;
-}
 
 .menu-toggle {
   font-size: 24px;

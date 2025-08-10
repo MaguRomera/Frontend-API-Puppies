@@ -16,7 +16,7 @@ export default function Home(){
 
     return(
         <div className="main">
-            <header className="header-cnt">
+            <header className="flex bg-verydarkgrey h-12 px-4">
                 <BotonMenu />
             </header>
             <div className="cnt-main-home">
