@@ -1,7 +1,9 @@
 import { useState } from "react";
 import EstadoComedero from "../componentes/EstadoComedero";
 import { EstadoComida } from "../componentes/EstadoComida";
+import BotonMenu from "../componentes/BotónMenu";
 import { useRecv } from "../lib/recv";
+
 
 export default function Home(){
     const [tanque, setTanque] = useState(0);
@@ -13,11 +15,16 @@ export default function Home(){
     })
 
     return(
-        <div className="cnt-main-home">
-            <EstadoComida gramos={plato}/>
-            <span className="info-tanque">
-                <EstadoComedero value={Math.round((30 - tanque) / 30 * 100 + 5)}/>
-            </span>
+        <div className="main">
+            <header className="header-cnt">
+                <BotonMenu />
+            </header>
+            <div className="cnt-main-home">
+                <EstadoComida gramos={plato}/>
+                <span className="info-tanque">
+                    <EstadoComedero value={Math.round((30 - tanque) / 30 * 100 + 5)}/>
+                </span>
+            </div>
         </div>
     )
 }

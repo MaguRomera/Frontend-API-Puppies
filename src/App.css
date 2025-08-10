@@ -2,7 +2,14 @@
   background-color: #464646;
   display: flex;
   flex-direction: column;
-
+  --font-sans: "Work Sans", sans-serif;
+  --color-darkgrey: #464646;
+  --color-pink: #DF59C2;
+  --color-green: #69DF59;
+  --color-lightblue: #59D2DF;
+  --color-yellow: #DFDF59;
+  --color-lightgrey: #C8C8C8;
+  --color-verydarkgrey: #222222;
 }
 
 @import "tailwindcss";
@@ -17,8 +24,79 @@
   --color-lightgrey: #C8C8C8;
 }
 
+/*---------------HOME------------------*/
 .cnt-main-home{
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: baseline;
+  align-items: center;
+}
+/*---------------MENU-------------------*/
+.header-cnt{
+  display: flex;
+  flex-direction: row;
+  background-color: var(--color-verydarkgrey);
+  height: 3rem;
+  padding: 1rem;
+}
+
+.menu-toggle {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 900;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: var(--color-darkgrey);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  transition: left 0.3s ease;
+  padding: 20px 0;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--color-lightgrey);
+  margin: 0 20px;
 }
