@@ -62,7 +62,14 @@
 }
 
 .sidebar.open {
+  display: flex;
+  flex-direction: column;
   left: 0;
+  align-content: space-between;
+}
+
+.logout-cnt {
+  margin-top: auto;
 }
 
 .menu-item {

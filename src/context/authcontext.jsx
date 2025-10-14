@@ -8,7 +8,7 @@ export const useAuth = () => useContext(AuthContext);
 
 const API_URL = 'https://apipuppies.santiagocezar2013.workers.dev/api/auth';
 
-const api = axios.create();
+const api = axios.create(); 
 
 export function AuthProvider({ children }) {
     const navigate = useNavigate();
@@ -16,7 +16,6 @@ export function AuthProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-
 
     // Función p refrescar el token
     const refreshAccessToken = async () => {
@@ -26,18 +25,18 @@ export function AuthProvider({ children }) {
         }
 
         try {
-            const response = await axios.post(`${API_URL}/refresh`, { refresh: refreshToken });
+            const response = await axios.post(`${API_URL}/refresh`, { refresh: refreshToken }); 
             const newAccessToken = response.data.access;
             localStorage.setItem('accessToken', newAccessToken);
             return true;
         } catch (error) {
-            console.error("Fallo al refrescar token. Cerrando sesión.");
+            console.error("Fallo al refrescar token. Cerrando sesión.", error);
             logout(false);
             return false;
         }
     };
     
-    // Manejo automático d token expirado
+    // Manejo automático d token expirado 
     useEffect(() => {
         const interceptor = api.interceptors.response.use(
             (response) => response,
@@ -81,10 +80,11 @@ export function AuthProvider({ children }) {
 
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
+            
             setIsLoggedIn(true);
             setUser(userData);
             
-            navigate('/');
+            navigate('/'); 
             return true;
         } catch (error) {
             setLoading(false);
@@ -117,22 +117,14 @@ export function AuthProvider({ children }) {
     };
 
 
-    // verificación d tokens al cargar la app
-     useEffect(() => {
+    useEffect(() => {
         const checkAuth = async () => {
             const accessToken = localStorage.getItem('accessToken');
             const refreshToken = localStorage.getItem('refreshToken');
 
             if (accessToken && refreshToken) {
-                setIsLoggedIn(true);
 
-                const success = await refreshAccessToken();
-                
-                if (success) {
-                    setIsLoggedIn(true);
-                } else {
-                    setIsLoggedIn(false);
-                }
+                setIsLoggedIn(true);
             }
             
             setLoading(false);
