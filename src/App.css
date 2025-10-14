@@ -211,8 +211,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Asegura que cubra toda la vista */
-    background-color: #f4f4f4; /* Ejemplo de color de fondo claro */
+    min-height: 100vh; 
+    background-color: #f4f4f4; 
 }
 
 .editable-input {
@@ -224,17 +224,17 @@
 
 .no-pet-message-cnt {
     text-align: center;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 1.2rem;
+    border-radius: 0.5rem;
     background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: -60px; 
+    box-shadow: 0 0.4rem 0.5rem rgba(0, 0, 0, 0.1);
+    margin-top: -4rem; 
 }
 
 .no-pet-title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 0.8rem;
     color: #333;
 }
 
@@ -264,7 +264,7 @@
   padding: 0.5rem;
   background-color: var(--color-lightblue);
   color: black;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-weight: normal;
   font-size: 1rem;
   cursor: pointer;
@@ -279,7 +279,7 @@
   padding: 0.5rem;
   background-color: var(--color-yellow);
   color: black;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-weight: normal;
   font-size: 1rem;
   cursor: pointer;
@@ -292,7 +292,6 @@
   row-gap: 0.6rem;
 }
 
-/* Estilos para los campos de formulario en modo edición */
 .datolargo, .datocorto {
   padding: 0.4rem 0.5rem;
   border-radius: 0.4rem;
@@ -309,4 +308,54 @@
     background-size: 0.7rem;
     padding-right: 2rem; 
     border: none;
+}
+
+/*-----------------------------INICIO DE SESIÓN-------------------------------*/
+.auth-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 80vh;
+}
+
+.auth-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.auth-title{
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  font-family: var(--font-sans); 
+  color: var(--color-lightblue);
+}
+
+.auth-input{
+  font-family: var(--font-sans);
+  color: var(--color-white);
+  background-color: var(--background-disabled);
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+  width: 15rem;
+}
+
+.auth-button{
+  background-color: var(--color-lightblue);
+  font-family: var(--font-sans);
+  color: var(--color-white);
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  margin-top: 1rem;
+  width: 15rem;
+}
+
+.auth-error-message {
+  color: #a72835;
+  font-size: 0.9rem;
+  text-align: center;
 }
