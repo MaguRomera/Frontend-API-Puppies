@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ClipLoader from "react-spinners/ClipLoader"
 
 const AuthContext = createContext();
 
@@ -144,7 +145,11 @@ export function AuthProvider({ children }) {
     };
 
     if (loading) {
-        return <div>Cargando sesión...</div>; 
+        return (
+            <div className='loading-fullscreen'>
+                <ClipLoader color={"#ffffff"} loading={loading} size={80}/>
+            </div>
+        ); 
     }
 
     return (

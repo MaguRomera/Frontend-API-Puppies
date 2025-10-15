@@ -14,8 +14,6 @@ export function Mascota() {
 
     const [isEditingPet, setIsEditingPet] = useState(false);
     
-    // 1. Estados locales para los datos editables (inicializados con petData)
-    // Usamos estados locales para los campos que serán editados
     const [nombre, setNombre] = useState(petData.nombre || "");
     const [raza, setRaza] = useState(petData.raza || "");
     const [peso, setPeso] = useState(petData.peso || "");
@@ -25,7 +23,6 @@ export function Mascota() {
         petData.birthday ? new Date(petData.birthday) : null
     );
     
-    // Estado para la lista de razas
     const [breeds, setBreeds] = useState([]); 
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(false);
 
@@ -123,7 +120,7 @@ export function Mascota() {
                     <BotonMenu />
                 </header>
                 <div className="no-pet-message-cnt">
-                    <h2 className="no-pet-title">¡Oops! 🐾</h2>
+                    <h2 className="no-pet-title">¡Oops!</h2>
                     <p className="no-pet-text">Parece que no tienes mascotas cargadas.</p>
                     <button 
                         onClick={handleLoadPet} 
@@ -141,7 +138,7 @@ export function Mascota() {
         <div className="mascota-main-div">
             <header className="flex bg-verydarkgrey h-12 px-4">
                 <BotonMenu />
-            </header>  
+            </header> 
             <div className="title-mascota-cnt">
                 <h2>TU MASCOTA</h2>
                 <span className="btn-mascota-cnt">
@@ -199,7 +196,7 @@ export function Mascota() {
                 <span className="mascota-info-agrupador">
                     {/* Día de nacimiento */}
                     <span className="mascota-dato">
-                        <label>Día de nacimiento</label>
+                        <label>Nació el día...</label>
                         {isEditingPet ? (
                             <input 
                                 type="date"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/authcontext'; 
+import { useAuth } from '../context/authcontext';
+import logo from '../assets/logo-con-texto.png'
 
 export function Login() {
     const [username, setUsername] = useState('');
@@ -19,7 +20,7 @@ export function Login() {
 
     return (
         <div className="auth-container">
-            <h2 className="auth-title">API PUPPIES LOGO</h2>
+            <img src={logo} alt="API PUPPIES" className='title-logo-wtext'/>
             <form onSubmit={handleSubmit} className="auth-form">
                 
                 <input
@@ -41,7 +42,7 @@ export function Login() {
                 />
                 {error && <p className="auth-error-message">{error}</p>}
                 <button type="submit" disabled={loading} className="auth-button">
-                    {loading ? 'Cargando...' : 'Iniciar Sesión'}
+                    Iniciar Sesión
                 </button>
             </form>
                         

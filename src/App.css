@@ -29,6 +29,7 @@
 }
 /*---------------MENU-------------------*/
 
+
 .menu-toggle {
   font-size: 24px;
   background: none;
@@ -196,6 +197,11 @@
   font-weight: 500;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  cursor: pointer;
+}
+
 .datocorto{
   background-color: var(--color-lightblue);
   padding: 0.5rem;
@@ -303,18 +309,28 @@
   padding: 0.4rem 0.5rem;
   border-radius: 0.4rem;
   font-size: 1rem;
+  outline: none;
+  border: none;
 }
 
 /* P Q LOS select  tengan la misma apariencia que los input */
 .mascota-dato select.datocorto, .mascota-dato select.datolargo {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    background-size: 0.7rem;
-    padding-right: 2rem; 
-    border: none;
+  border: none;
+  outline: none;
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+   background-size: 1rem; 
+   padding-right: 2.5rem; 
+}
+
+.title-carga-masc{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
 }
 
 /*-----------------------------INICIO DE SESIÓN-------------------------------*/
@@ -334,11 +350,10 @@
   row-gap: 0.5rem;
 }
 
-.auth-title{
-  font-size: 1.5rem;
-  margin-bottom: 3rem;
-  font-family: var(--font-sans); 
-  color: var(--color-lightblue);
+.title-logo-wtext{
+  width: 15rem;
+  height: auto;
+  margin-bottom: 1.5rem;
 }
 
 .auth-input{
@@ -349,6 +364,12 @@
   padding: 0.3rem;
   margin-bottom: 0.5rem;
   width: 15rem;
+  outline: none;
+  border: none;
+}
+
+.auth-input input:focus {
+  outline: none;
 }
 
 .auth-button{
@@ -366,3 +387,17 @@
   font-size: 0.9rem;
   text-align: center;
 }
+
+.loading-fullscreen {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  
+    z-index: 9999; 
+}
+
