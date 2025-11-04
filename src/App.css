@@ -401,3 +401,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     z-index: 9999; 
 }
 
+/*--------------RUTINA---------------*/
+.cnt-main-rutina{
+  margin: 2rem;
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+}
+
+.campo{
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.campo label{
+  color: var(--color-white);
+  font-family: var(--font-sans);
+}
+
+.input-horario{
+  background-color: var(--background-disabled);
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  display: flex;
+  margin-top: 1rem;
+  color: var(--color-white);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1);
+}
+
+.error-horario{
+  color: var(--color-pink);
+  font-family: var(--font-sans, "Work Sans", sans-serif);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

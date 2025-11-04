@@ -4,6 +4,7 @@ import { Preferencias } from './pages/preferencias';
 import { Mascota } from './pages/mascota';
 import { cargaNuevaMascota } from './pages/cargaNuevaMascota';
 import { Login } from './pages/login';
+import { rutina } from './pages/rutina';
 import './App.css'
 import { RecvProvider } from './lib/recv';
 
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/preferencias" element={<ProtectedRoute element={Preferencias} />} />
                     <Route path="/mascota" element={<ProtectedRoute element={Mascota} />} />
                     <Route path="/cargar-mascota" element={<ProtectedRoute element={cargaNuevaMascota} />} />
+                    <Route path="/rutina" element={<ProtectedRoute element={rutina} />} />
                   </Routes>
                 </RecvProvider>
             </AuthProvider>

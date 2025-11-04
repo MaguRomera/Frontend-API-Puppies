@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader"
 
+
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
