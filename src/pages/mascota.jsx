@@ -4,39 +4,63 @@ import axios from "axios";
 import BotonMenu from "../componentes/BotónMenu";
 import edit_icon from '../assets/edit.svg';
 import delete_icon from '../assets/delete.svg';
-import { APIPuppiesContext } from "../context/apipuppiescontext";
+import { useAuth } from "../context/authcontext";
 
 export function Mascota() {
-    const { petData } = useContext(APIPuppiesContext);
+
+    const {api} = useAuth();
     const navigate = useNavigate();
 
-    const hasPet = petData && petData.nombre;
+    const [petData, setPetData] = useState([])
+
+    const hasPet = petData
 
     const [isEditingPet, setIsEditingPet] = useState(false);
     
-    const [nombre, setNombre] = useState(petData.nombre || "");
-    const [raza, setRaza] = useState(petData.raza || "");
-    const [peso, setPeso] = useState(petData.peso || "");
-    const [sexo, setSexo] = useState(petData.sexo || "Macho"); 
-    const [ejercicio, setEjercicio] = useState(petData.ejercicio || "Bajo");
-    const [birthDate, setBirthDate] = useState(
-        petData.birthday ? new Date(petData.birthday) : null
-    );
+    const [nombre, setNombre] = useState("");
+    const [razaName, setRazaName] = useState("");
+    const [razaId, setRazaId] = useState(0);
+    const [peso, setPeso] = useState("");
+    const [sexo, setSexo] = useState(""); 
+    const [ejercicio, setEjercicio] = useState("");
+    const [birthDate, setBirthDate] = useState("");
     
     const [breeds, setBreeds] = useState([]); 
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(false);
 
     const exerciseOptions = ["Bajo", "Moderado", "Alto"];
 
-    // Sincroniza los estados locales al montar o si petData cambia
+    const getPetData = async ()=> {
+        const options = {
+                method: 'GET',
+                url: 'https://apipuppies.santiagocezar2013.workers.dev/api/pets/'            
+            };
+            try {
+                const { data } = await api.request(options);
+                setPetData(data);
+                console.log(data)
+            } catch (error) {
+                console.error("Error al traer las mascotas:", error); 
+            } 
+    }
+    
     useEffect(() => {
-        setNombre(petData.nombre || "");
-        setRaza(petData.raza || "");
-        setPeso(petData.peso || "");
-        setSexo(petData.sexo || "Macho");
-        setEjercicio(petData.ejercicio || "Bajo");
-        setBirthDate(petData.birthday ? new Date(petData.birthday) : null);
-    }, [petData]);
+        getPetData()
+
+    }, []);
+
+    // Sincroniza los estados locales al montar o si petData cambia
+    //CAMBIÁ LOS NOMBRES D LOS ATRIBUTOS!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    useEffect(() => {
+        setNombre(petData.name);
+        const breedName = breeds.find(b => b.id === petData.breedId)?.name || "";
+        setRazaName(breedName);
+        setRazaId(petData.breedId);
+        setPeso(petData.weight);
+        setSexo(petData.sex);
+        setEjercicio(petData.exercise);
+        setBirthDate(petData.birthday);
+    }, [petData, breeds]);
 
     // useEffect para cargar la lista de razas
     useEffect(() => {
@@ -50,14 +74,13 @@ export function Mascota() {
                 const { data } = await axios.request(options);
                 setBreeds(data);
             } catch (error) {
-                console.error("Error al cargar razas:", error);
-                setBreeds([{ id: 0, name: petData.raza }]); 
+                console.error("Error al cargar razas:", error); 
             } finally {
                 setIsLoadingBreeds(false);
             }
         };
         fetchBreeds();
-    }, [petData.raza]); 
+    }, [petData.breedId]); 
 
 
     const handleEdit = () => {
@@ -66,12 +89,14 @@ export function Mascota() {
 
     const handleCancel = () => {
         // Al cancelar, restauramos los estados locales a los valores originales de petData
-        setNombre(petData.nombre || "");
-        setRaza(petData.raza || "");
-        setPeso(petData.peso || "");
-        setSexo(petData.sexo || "Macho");
-        setEjercicio(petData.ejercicio || "Bajo");
-        setBirthDate(petData.birthday ? new Date(petData.birthday) : null);
+        setNombre(petData.name);
+        const breedName = breeds.find(b => b.id === petData.breedId)?.name || "";
+        setRazaName(breedName);
+        setRazaId(petData.breedId);
+        setPeso(petData.weight);
+        setSexo(petData.sex);
+        setEjercicio(petData.exercise);
+        setBirthDate(petData.birthday);
         
         setIsEditingPet(false);
     };
@@ -81,36 +106,11 @@ export function Mascota() {
     };
 
     const handleSave = async () => {
-        // CAMBISAR TODO ESSTO POR EL POST DE LA API!!!!
-        const selectedBreed = breeds.find(b => b.name === raza);
-        const updatedData = {
-            name: nombre,
-            img: petData.img || '',
-            birthday: birthDate ? birthDate.toISOString() : null,
-            weight: parseFloat(peso), 
-            sex: sexo === 'Macho' ? 'm' : 'f', 
-            exercise: exerciseOptions.indexOf(ejercicio),
-            breedId: selectedBreed ? selectedBreed.id : 0,
-            ownerId: petData.ownerId || 1 
-        };
         
-        const options = {
-            method: 'POST', 
-            url: 'https://apipuppies.santiagocezar2013.workers.dev/api/pets/',
-            headers: {'Content-Type': 'application/json'},
-            data: updatedData
-        };
-
-        try {
-            await axios.request(options);
-            setIsEditingPet(false);
-        } catch (error) {
-            console.error("Error al guardar la mascota:", error);
-            alert("Error al guardar los datos.");
-        }
+        
     };
     
-    const formattedBirthDate = birthDate ? birthDate.toISOString().substring(0, 10) : '';
+    const formattedBirthDate = birthDate ? birthDate.toString().substring(0, 10) : '';
 
     // Modo NO HAY MASCOTA
     if (!hasPet) {

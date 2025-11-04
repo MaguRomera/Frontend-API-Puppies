@@ -70,10 +70,10 @@ export function rutina(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const scheduleSeconds = horarios.map(t => timeToSeconds(t));
+        const scheduleSeconds = horarios.map(t => convertToSeconds(t));
 
         const payload = {
-            goal: goal === "Aumentar peso" ? "increase" : goal === "Disminuir peso" ? "decrease" : "maintain",
+            goal: goal === "Aumentar peso" ? "increase" : goal === "Disminuir peso" ? "decrease" : "balance",
             servingSize: Number(servingSize),
             schedule: scheduleSeconds,
             utcOffset,
@@ -94,8 +94,6 @@ export function rutina(){
     const handleHorarioChange = (index, value) => {
         const updated = [...horarios];
         updated[index] = value;
-
-        // Validar horarios repetidos !!
         const unique = new Set(updated);
         if (unique.size !== updated.length) {
             setErrorHorario("Error: Los horarios no pueden repetirse");
