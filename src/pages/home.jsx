@@ -25,18 +25,25 @@ export default function Home(){
         setPlato(data.plato)
     })
 
-    const fetchRoutine = async () => {
-    try {
-      const { data } = await api.get(`/devices/${devId}/routine`);
-      setRoutine(data);
-    } catch (error) {
-      console.error("Error rutina:", error);
-    }
-  };
+        const fetchRoutine = async () => {
+            try {
+                const { data } = await api.get(
+                    `https://apipuppies.santiagocezar2013.workers.dev/api/devices/${devId}/routine`
+                );
+
+                if (!data) return; // si no hay rutina cargada, chau
+                setRoutine(data);
+
+            } catch (err) {
+                console.error("Error obteniendo rutina:", err);
+            }
+        };
 
     const fetchStatus = async () => {
         try {
-        const { data } = await api.get(`/devices/${devId}/routine/status`);
+        const { data } = await api.get(
+         `https://apipuppies.santiagocezar2013.workers.dev/api/devices/${devId}/routine/status`
+        );
         setStatus(data);
         } catch (error) {
         console.error("Error status:", error);
@@ -48,8 +55,12 @@ export default function Home(){
     }, []);
 
     useEffect(() => {
+        console.log("Routine:", routine);
         if (routine) fetchStatus();
     }, [routine]);
+
+    // borrar esto dsp
+    console.log("Status:", status);
 
     return(
         <div className="main">
@@ -58,12 +69,14 @@ export default function Home(){
             </header>
             <div className="cnt-main-home">
                 <EstadoComida gramos={plato}/>
-                <span className="info-tanque">
-                    <EstadoComedero value={Math.round((30 - tanque) / 30 * 100 + 5)}/>
-                </span>
-                <span className="cnt-main-home">
-                    <RoutineWidget routine={routine} status={status}/>
-                </span>
+                <div className="cnt-sec-home">
+                    <span className="info-tanque">
+                        <EstadoComedero value={Math.round((30 - tanque) / 30 * 100 + 5)}/>
+                    </span>
+                    <span className="cnt-widget">
+                        <RoutineWidget routine={routine} status={status}/>
+                    </span>
+                </div>
             </div>
         </div>
     )

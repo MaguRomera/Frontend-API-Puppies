@@ -1,7 +1,7 @@
-
+import { useState, useEffect } from "react";
+import alarm from "../assets/alarm-clock.svg"
 
 export function RoutineWidget({ routine, status }) {
-  
   
     if (
         !routine ||
@@ -14,7 +14,16 @@ export function RoutineWidget({ routine, status }) {
 
     const { schedule, servingSize } = routine;
     const portionsPerDay = schedule?.length || 2;
-    const capacity = 500; // gramos del tanque
+    const [displaySchedule, setDisplaySchedule] = useState([]);
+
+    useEffect(() => {
+    if (schedule?.length > 0) {
+      const converted = schedule.map(seg => Math.floor(seg / 60));
+      setDisplaySchedule(converted);
+    }
+  }, [schedule]);
+
+    const capacity = 450; // gramos del tanque
 
     // formulita q predice cuándo se agota la comida del tanque
     const daysToRefill = Math.floor(capacity / (servingSize * portionsPerDay));
@@ -30,7 +39,7 @@ export function RoutineWidget({ routine, status }) {
         <h3 className="widget-title">Próxima porción</h3>
 
         <div className="times-row">
-            {schedule.map((time, i) => (
+            {displaySchedule.map((time, i) => (
             <span
                 key={i}
                 className={`time-pill ${status?.[i]?.done ? "done" : ""}`}
@@ -46,7 +55,9 @@ export function RoutineWidget({ routine, status }) {
             {daysToRefill} {daysToRefill === 1 ? "día" : "días"}
         </div>
 
-        <div className="alarm-icon">⏰</div>
+        <div className="alarm-icon">
+            <img src={alarm}/>
+        </div>
         </div>
     );
 }

@@ -21,9 +21,18 @@
 
 /*---------------HOME------------------*/
 .cnt-main-home{
-  margin-top: 1rem;
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+}
+
+.cnt-sec-home{
+  margin-top: 1rem;
+  column-gap: 3rem;
+  display: flex;
+  flex-direction: row;
   justify-content: baseline;
   align-items: center;
 }
@@ -443,10 +452,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 /*WIDGET RUTINA*/
 
+.cnt-widget{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+  border: var(--color-lightgrey), solid, 0.1rem;
+  border-radius: 0.6rem;
+}
+
+
 .tank-card {
-  background: #3d3d3d;
-  border-radius: 16px;
-  padding: 18px;
+  background: var(--color-darkgrey);
+  border-radius: 1rem;
+  border-color: var(--color-white);
+  padding: 1.4rem;
   color: white;
   font-family: var(--font-sans, "Work Sans");
   position: relative;
@@ -455,44 +476,43 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .widget-title {
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 0.6rem;
 }
 
 .times-row {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .time-pill {
   background: #6c6c6c;
   color: white;
-  padding: 6px 12px;
-  border-radius: 16px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
   font-size: 0.85rem;
 }
 
 .time-pill.done {
-  background: var(--color-green, #4cd964);
+  background: var(--color-green);
   font-weight: 600;
-  color: black;
+  color: var(--color-verydarkgrey);
 }
 
 .refill-label {
   font-size: 0.9rem;
   opacity: 0.85;
-  margin-top: 6px;
+  margin-top: 0.4rem;
 }
 
 .refill-value {
   font-size: 1.8rem;
   font-weight: 700;
-  margin-top: 4px;
+  margin-top: 0.2rem;
 }
 
 .alarm-icon {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
-  font-size: 20px;
+  right: 1rem;
+  bottom: 1rem;
 }
