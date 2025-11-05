@@ -11,25 +11,28 @@ export function Mascota() {
     const {api} = useAuth();
     const navigate = useNavigate();
 
-    const [petData, setPetData] = useState([])
+    const [petData, setPetData] = useState(null);
 
     const hasPet = petData
 
     const [isEditingPet, setIsEditingPet] = useState(false);
     
     const [nombre, setNombre] = useState("");
-    const [razaName, setRazaName] = useState("");
+    const [petId, setPetId] = useState(0);
     const [razaId, setRazaId] = useState(0);
     const [peso, setPeso] = useState("");
     const [sexo, setSexo] = useState(""); 
-    const [ejercicio, setEjercicio] = useState("");
+    const [ejercicio, setEjercicio] = useState(0);
     const [birthDate, setBirthDate] = useState("");
     
     const [breeds, setBreeds] = useState([]); 
     const [isLoadingBreeds, setIsLoadingBreeds] = useState(false);
 
-    const exerciseOptions = ["Bajo", "Moderado", "Alto"];
-
+    const exerciseOptions = [
+    { value: 0, label: "Bajo" },
+    { value: 1, label: "Moderado" },
+    { value: 2, label: "Alto" },
+    ];
     const getPetData = async ()=> {
         const options = {
                 method: 'GET',
@@ -37,7 +40,7 @@ export function Mascota() {
             };
             try {
                 const { data } = await api.request(options);
-                setPetData(data);
+                setPetData(data[0] || null);
                 console.log(data)
             } catch (error) {
                 console.error("Error al traer las mascotas:", error); 
@@ -50,17 +53,19 @@ export function Mascota() {
     }, []);
 
     // Sincroniza los estados locales al montar o si petData cambia
-    //CAMBIÁ LOS NOMBRES D LOS ATRIBUTOS!!!!!!!!!!!!!!!!!!!!!!!!!!!
     useEffect(() => {
+        if (!petData) return;
+        
+        setPetId(petData.id);
         setNombre(petData.name);
-        const breedName = breeds.find(b => b.id === petData.breedId)?.name || "";
-        setRazaName(breedName);
         setRazaId(petData.breedId);
         setPeso(petData.weight);
         setSexo(petData.sex);
         setEjercicio(petData.exercise);
-        setBirthDate(petData.birthday);
-    }, [petData, breeds]);
+        setBirthDate(
+            petData.birthday ? petData.birthday.substring(0, 10) : ""
+        );
+    }, [petData]);
 
     // useEffect para cargar la lista de razas
     useEffect(() => {
@@ -80,7 +85,7 @@ export function Mascota() {
             }
         };
         fetchBreeds();
-    }, [petData.breedId]); 
+    }, []); 
 
 
     const handleEdit = () => {
@@ -89,16 +94,13 @@ export function Mascota() {
 
     const handleCancel = () => {
         // Al cancelar, restauramos los estados locales a los valores originales de petData
+        setIsEditingPet(false);
         setNombre(petData.name);
-        const breedName = breeds.find(b => b.id === petData.breedId)?.name || "";
-        setRazaName(breedName);
         setRazaId(petData.breedId);
         setPeso(petData.weight);
         setSexo(petData.sex);
         setEjercicio(petData.exercise);
-        setBirthDate(petData.birthday);
-        
-        setIsEditingPet(false);
+        setBirthDate(petData.birthday ? petData.birthday.substring(0, 10) : "");       
     };
 
     const handleLoadPet = () => {
@@ -106,9 +108,35 @@ export function Mascota() {
     };
 
     const handleSave = async () => {
-        
-        
+        try {
+
+            const birthdayToSend = birthDate instanceof Date
+                ? birthDate.toISOString().split("T")[0]
+                : birthDate;
+            const body = {
+                name: nombre,
+                birthday: birthDate,
+                weight: parseFloat(peso),
+                sex: sexo,
+                exercise: Number(ejercicio),
+                breedId: Number(razaId),
+            };
+
+            const res = await api.patch(
+                `https://apipuppies.santiagocezar2013.workers.dev/api/pets/${petId}`,
+                body,
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            setPetData(res.data);
+            setIsEditingPet(false);
+
+        } catch (err) {
+            console.error("Error guardando mascota:", err);
+        }
     };
+        
+
     
     const formattedBirthDate = birthDate ? birthDate.toString().substring(0, 10) : '';
 
@@ -169,7 +197,7 @@ export function Mascota() {
                             className="datolargo editable-input" 
                         />
                     ) : (
-                        <p className="datolargo">{petData.nombre}</p>
+                        <p className="datolargo">{nombre}</p>
                     )}
                 </span>
                 
@@ -178,18 +206,18 @@ export function Mascota() {
                     <label>Raza</label>
                     {isEditingPet ? (
                         <select
-                            value={raza}
-                            onChange={(e) => setRaza(e.target.value)}
+                            value={razaId}
+                            onChange={(e) => setRazaId(parseInt(e.target.value))}
                             className="datolargo editable-input"
                             disabled={isLoadingBreeds}
                         >
                             {isLoadingBreeds && <option>Cargando razas...</option>}
                             {breeds.map((breed) => (
-                                <option key={breed.id} value={breed.name}>{breed.name}</option>
+                                <option key={breed.id} value={breed.id}>{breed.name}</option>
                             ))}
                         </select>
                     ) : (
-                        <p className="datolargo">{petData.raza}</p>
+                        <p className="datolargo">{breeds.find((b) => b.id === Number(razaId))?.name || ""}</p>
                     )}
                 </span>
                 
@@ -200,14 +228,12 @@ export function Mascota() {
                         {isEditingPet ? (
                             <input 
                                 type="date"
-                                value={formattedBirthDate} 
-                                onChange={(e) => setBirthDate(e.target.value ? new Date(e.target.value) : null)}
+                                value={birthDate} 
+                                onChange={(e) => setBirthDate(e.target.value)}
                                 className="datocorto editable-input" 
                             />
                         ) : (
-                            <p className="datocorto">
-                                {birthDate ? birthDate.toLocaleDateString('es-ES') : 'N/A'}
-                            </p>
+                            <p className="datocorto">{birthDate}</p>
                         )}
                     </span>
 
@@ -223,7 +249,7 @@ export function Mascota() {
                                 className="datocorto editable-input" 
                             />
                         ) : (
-                            <p className="datocorto">{petData.peso} kg</p>
+                            <p className="datocorto">{peso} kg</p>
                         )}
                     </span>
                 </span>
@@ -238,11 +264,11 @@ export function Mascota() {
                                 onChange={(e) => setSexo(e.target.value)}
                                 className="datocorto editable-input" 
                             >
-                                <option value="Macho">Macho</option>
-                                <option value="Hembra">Hembra</option>
+                                <option value="m">Macho</option>
+                                <option value="f">Hembra</option>
                             </select>
                         ) : (
-                            <p className="datocorto">{petData.sexo}</p>
+                            <p className="datocorto">{sexo === "m" ? "Macho" : "Hembra"}</p>
                         )}
                     </span>
                     
@@ -252,15 +278,15 @@ export function Mascota() {
                         {isEditingPet ? (
                             <select
                                 value={ejercicio}
-                                onChange={(e) => setEjercicio(e.target.value)}
+                                onChange={(e) => setEjercicio(parseInt(e.target.value))}
                                 className="datocorto editable-input" 
                             >
                                 {exerciseOptions.map(option => (
-                                    <option key={option} value={option}>{option}</option>
+                                    <option key={option.value} value={option.value}>{option.label}</option>
                                 ))}
                             </select>
                         ) : (
-                            <p className="datocorto">{petData.ejercicio}</p>
+                            <p className="datocorto">{exerciseOptions.find(opt => opt.value === ejercicio)?.label}</p>
                         )}
                     </span>
                 </span>

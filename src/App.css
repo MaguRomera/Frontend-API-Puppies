@@ -225,7 +225,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     justify-content: center;
     min-height: 100vh; 
-    background-color: #f4f4f4; 
+    background-color: var(--color-darkgrey); 
 }
 
 .editable-input {
@@ -239,7 +239,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
     padding: 1.2rem;
     border-radius: 0.5rem;
-    background-color: #ffffff;
+    background-color: var(--color-darkgrey);
     box-shadow: 0 0.4rem 0.5rem rgba(0, 0, 0, 0.1);
     margin-top: -4rem; 
 }
@@ -248,12 +248,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0.8rem;
-    color: #333;
+    color: var(--color-white);
 }
 
 .no-pet-text {
     margin-bottom: 20px;
-    color: #666;
+    color: var(--color-white);
 }
 
 .btn-cargar-mascota {
