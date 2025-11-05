@@ -2,7 +2,6 @@ import BotonMenu from "../componentes/BotónMenu"
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/authcontext";
 
-
 export function rutina(){
 
     const { api, user } = useAuth();
@@ -55,11 +54,25 @@ export function rutina(){
     }, []);
 
     useEffect(() => {
-        if (Number(cantComidas) === 2) {
-            setHorarios(["08:00", "20:00"]);
-        } else {
-            setHorarios(["08:00", "13:00", "20:00"]);
-        }
+        setHorarios(prev => {
+            const num = Number(cantComidas);
+
+            if (num === prev.length) {
+                return prev; 
+            }
+
+
+            if (num > prev.length) {
+                return [...prev, "13:00"]; 
+            }
+
+
+            if (num < prev.length) {
+                return [prev[0], prev[prev.length - 1]];
+            }
+
+            return prev;
+        });
     }, [cantComidas]);
 
     useEffect(() => {
@@ -79,7 +92,7 @@ export function rutina(){
             utcOffset,
             forPetId
         };
-
+        alert("Rutina guardada correctamente");
         try {
             await api.put(
                 `https://apipuppies.santiagocezar2013.workers.dev/api/devices/${devId}/routine`,
@@ -87,6 +100,7 @@ export function rutina(){
             );
             console.log("Rutina guardada con éxito");
         } catch (err) {
+            alert("Error guardando la rutina");
             console.error("Error guardando rutina:", err);
         }
     };
